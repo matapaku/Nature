@@ -10,6 +10,7 @@
 
 #define RCC_GPIOBEN (*(volatile uint32_t *) 0x40023830U)
 #define RCC_I2C1EN (*(volatile uint32_t *) 0x40023840U)
+#define RCC_TIM2EN (*(volatile uint32_t *) 0x40023844U)
 
 #define GPIOA ((GPIO_TypeDef *)GPIOA_BASEADDR)
 #define GPIOB ((GPIO_TypeDef *)GPIOB_BASEADDR)
