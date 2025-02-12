@@ -24,7 +24,7 @@ void I2C_Init(void){
 }
 
 void TIM2_Init(void){
-    *((volatile uint32_t *)0x40023840) |= (1 << 0); // TIM2クロック有効化
+    RCC_TIM2EN |= (1 << 0); // TIM2クロック有効化
     TIM2->PSC = 16000 - 1; // 1ms
     TIM2->ARR = 4200 - 1; // 5s
     TIM2->CCMR1 |= (6 << 4); // PWM mode 1
@@ -74,7 +74,7 @@ float calc_discomfort_index(float temp, float hum) {
 }
 
 void IR_SendSignal(void) {
-    TIM2->CCR1 = TIM2->ARR / 2; // 50% duty
+    //赤外線を送信する
 }
 
 int main(void){
@@ -89,10 +89,10 @@ int main(void){
         float temp = ((raw_data >> 8) & 0xFF) / 100.0; // 8bit temperature
         float hum = (raw_data & 0xFF) / 100.0; // 8bit humidity
 
-        float discomfort_index = calc_discomfort_index(temp, hum); // calculate discomfort index
+        float discomfort_index = calc_discomfort_index(temp, hum); //  discomfort indexの計算
 
         if (discomfort_index > 75.0) {
-            IR_SendSignal(); // send IR signal
+            IR_SendSignal(); // 赤外線を送信
         }
 
         delay_ms(5000); // 5s
